@@ -1,0 +1,357 @@
+* {
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --hue: 223;
+  --primary1: hsl(var(--hue),90%,50%);
+  --primary2: hsl(var(--hue),90%,70%);
+  --black: hsl(0,0%,0%);
+  --white: hsl(0,0%,100%);
+  --gray1: hsl(var(--hue),10%,90%);
+  --gray2: hsl(var(--hue),10%,80%);
+  --gray3: hsl(var(--hue),10%,70%);
+  --gray4: hsl(var(--hue),10%,60%);
+  --gray5: hsl(var(--hue),10%,50%);
+  --gray6: hsl(var(--hue),10%,40%);
+  --gray7: hsl(var(--hue),10%,30%);
+  --gray8: hsl(var(--hue),10%,20%);
+  --gray9: hsl(var(--hue),10%,10%);
+  --trans-dur: 0.3s;
+  font-size: calc(20px + (30 - 20) * (100vw - 320px) / (3840 - 320));
+}
+
+body,
+button,
+input {
+  font: 1em/1.5 "DM Sans", sans-serif;
+}
+
+body {
+  background-color: var(--gray1);
+  color: var(--gray9);
+  transition: background-color var(--trans-dur), color var(--trans-dur);
+}
+
+main {
+  container-name: main;
+  container-type: inline-size;
+  margin: auto;
+  padding: 1.5em 0;
+  width: 100%;
+  max-width: 33em;
+}
+
+.bike {
+  display: block;
+  margin: 0 auto 1.5em auto;
+  width: 100%;
+  max-width: 16.5em;
+  height: auto;
+}
+.bike__group-x, .bike__group-y, .bike__pedals-spin, .bike__spokes-spin, .bike__tire {
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.bike__group-x {
+  animation-name: bike-move;
+  animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+}
+.bike__group-y {
+  animation-name: bike-bounce;
+  transform-origin: 50% 28px;
+}
+.bike__pedals-spin {
+  animation-name: bike-pedals-spin;
+}
+.bike__spokes-spin {
+  animation-name: bike-spokes-spin;
+}
+.bike__tire {
+  animation-name: bike-tire-bounce;
+}
+
+.controls {
+  display: grid;
+  gap: 1.5em;
+  padding: 0 0.75em;
+  width: 100%;
+}
+.controls__button, .controls__color, .controls__range, .controls__switch {
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.controls__color, .controls__range, .controls__switch {
+  flex-shrink: 0;
+}
+.controls__button, .controls__row {
+  background-color: var(--white);
+  border-radius: 0.5em;
+  padding: 0.5em 0.75em;
+  position: relative;
+  transition: background-color var(--trans-dur);
+}
+.controls__button {
+  color: var(--primary1);
+  width: 100%;
+  text-align: inherit;
+  transition: background-color var(--trans-dur), color var(--trans-dur);
+}
+.controls__button:focus-visible, .controls__button:hover {
+  background-color: var(--gray2);
+}
+.controls__color {
+  background-color: transparent;
+  border-radius: 0.25em;
+  box-shadow: 0 0 0 1px var(--gray1);
+  width: 1.5em;
+  height: 1.5em;
+  transition: box-shadow var(--trans-dur);
+}
+.controls__color::-webkit-color-swatch {
+  border: 0;
+  border-radius: 0.25em;
+}
+.controls__color::-moz-color-swatch {
+  border: 0;
+  border-radius: 0.25em;
+}
+.controls__color::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.controls__icon, .controls__label {
+  margin-inline: 0 0.75em;
+}
+.controls__icon {
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+}
+.controls__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.controls__label--sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+.controls__range {
+  background-color: var(--gray1);
+  background-image: linear-gradient(90deg, var(--primary1), var(--primary1));
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  border-radius: 0.125em;
+  cursor: grab;
+  flex: 1;
+  min-width: 0;
+  height: 0.25em;
+  transition: background-color var(--trans-dur);
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.controls__range::-webkit-slider-thumb {
+  background-color: var(--white);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0.125em hsla(var(--hue), 10%, 50%, 0.3), 0 0.25em 0.375em hsla(var(--hue), 10%, 50%, 0.3);
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform var(--trans-dur);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.controls__range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.9);
+}
+.controls__range::-moz-range-thumb {
+  background-color: var(--white);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0.125em hsla(var(--hue), 10%, 50%, 0.3), 0 0.25em 0.375em hsla(var(--hue), 10%, 50%, 0.3);
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform var(--trans-dur);
+}
+.controls__range::-moz-range-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.9);
+}
+.controls__range + .controls__icon {
+  margin-inline: 0.75em 0;
+}
+.controls__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 0;
+  padding: 0.5em 0.75em;
+  transition: background-color var(--trans-dur);
+}
+.controls__row:empty {
+  background-color: transparent;
+}
+.controls__row-group {
+  min-width: 0;
+}
+.controls__row-group-title {
+  color: var(--gray6);
+  font-size: 0.75em;
+  line-height: 2;
+  padding-inline: 0.75rem 0;
+  text-transform: uppercase;
+  transition: color var(--trans-dur);
+}
+.controls__row-group .controls__button, .controls__row-group .controls__row {
+  border-radius: 0;
+}
+.controls__row-group .controls__button:first-child, .controls__row-group .controls__row:first-child {
+  border-radius: 0.5em 0.5em 0 0;
+}
+.controls__row-group .controls__button:last-child, .controls__row-group .controls__row:last-child {
+  border-radius: 0 0 0.5em 0.5em;
+}
+.controls__row-group .controls__button:not(:last-child):after, .controls__row-group .controls__row:not(:last-child):after {
+  background-color: var(--gray2);
+  content: "";
+  display: block;
+  position: absolute;
+  margin-inline: 0.75em 0;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  transition: background-color var(--trans-dur);
+  z-index: 1;
+}
+.controls__switch {
+  background-color: var(--gray1);
+  border-radius: 0.75em;
+  width: 2.5em;
+  height: 1.5em;
+  transition: background-color var(--trans-dur);
+}
+.controls__switch:before {
+  background-color: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0.125em 0.25em hsla(var(--hue), 10%, 50%, 0.3);
+  content: "";
+  display: block;
+  margin: 0.125em;
+  width: 1.25em;
+  height: 1.25em;
+  transition: transform var(--trans-dur), transform-origin var(--trans-dur);
+  transform-origin: 0 50%;
+}
+.controls__switch:active:before {
+  transform: scale(1.25, 1);
+}
+.controls__switch:checked {
+  background-color: var(--primary1);
+}
+.controls__switch:checked:before {
+  transform: translateX(1em);
+  transform-origin: 100% 50%;
+}
+.controls__switch:checked:active:before {
+  transform: translateX(1em) scale(1.25, 1);
+}
+[dir=rtl] .controls__switch:before {
+  transform-origin: 100% 50%;
+}
+[dir=rtl] .controls__switch:checked:before {
+  transform: translateX(-1em);
+  transform-origin: 0 50%;
+}
+[dir=rtl] .controls__switch:checked:active:before {
+  transform: translateX(-1em) scale(1.25, 1);
+}
+.controls__value-wrap {
+  color: var(--gray6);
+  display: inline-flex;
+  gap: 0.75em;
+  transition: color var(--trans-dur);
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--black);
+    color: var(--gray1);
+  }
+
+  .controls__button, .controls__row {
+    background-color: var(--gray9);
+  }
+  .controls__row-group .controls__button:not(:last-child):after, .controls__row-group .controls__row:not(:last-child):after {
+    background-color: var(--gray7);
+  }
+  .controls__button {
+    color: var(--primary2);
+  }
+  .controls__range, .controls__switch, .controls__button:focus-visible, .controls__button:hover {
+    background-color: var(--gray7);
+  }
+  .controls__color {
+    box-shadow: 0 0 0 1px var(--gray8);
+  }
+  .controls__row-group-title, .controls__value-wrap {
+    color: var(--gray4);
+  }
+}
+/* Beyond mobile */
+@container main (min-width: 700px) {
+  .controls {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Animations */
+@keyframes bike-move {
+  from, to {
+    transform: translate(6.5px, 1px);
+  }
+  50% {
+    transform: translate(7.5px, 1px);
+  }
+}
+@keyframes bike-bounce {
+  from, 25%, 50%, 75%, to {
+    transform: translate(0, 0);
+  }
+  12.5%, 37.5%, 62.5%, 87.5% {
+    transform: translate(0, 0.5px);
+  }
+}
+@keyframes bike-tire-bounce {
+  from, 25%, 50%, 75%, to {
+    transform: scale(1, 1);
+  }
+  12.5%, 37.5%, 62.5%, 87.5% {
+    transform: scale(1.04, 0.96);
+  }
+}
+@keyframes bike-pedals-spin {
+  from {
+    transform: rotate(0.1875turn);
+  }
+  to {
+    transform: rotate(4.1875turn);
+  }
+}
+@keyframes bike-spokes-spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(4turn);
+  }
+}
